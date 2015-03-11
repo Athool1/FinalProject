@@ -5,9 +5,16 @@
  */
 package finalproject;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Vector;
+import javax.swing.JCheckBox;
+import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -15,13 +22,24 @@ import java.util.logging.Logger;
  */
 public class MainMenu extends javax.swing.JFrame {
 
+    connectWithDB db = new connectWithDB();
+    Connection conn;
+    Statement st;
+    ResultSet rs;
+    ResultSetMetaData md;
+    String num, name;
+    int calories,price;
+    Vector columnNames = new Vector();
+    Vector data = new Vector();
+    private String u_name;
     /**
      * Creates new form MainMenu
      */
     public MainMenu() {
+        
         initComponents();
-    }
-
+        conn = db.getConnect();   
+    }  
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -49,6 +67,9 @@ public class MainMenu extends javax.swing.JFrame {
         jTextField3 = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
         jButton5 = new javax.swing.JButton();
+        jButton25 = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
+        jTextField7 = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
@@ -63,6 +84,27 @@ public class MainMenu extends javax.swing.JFrame {
         jButton10 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
+        jPanel8 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jButton14 = new javax.swing.JButton();
+        jButton15 = new javax.swing.JButton();
+        jPanel9 = new javax.swing.JPanel();
+        jPanel10 = new javax.swing.JPanel();
+        jButton16 = new javax.swing.JButton();
+        jButton17 = new javax.swing.JButton();
+        jButton18 = new javax.swing.JButton();
+        jButton19 = new javax.swing.JButton();
+        jButton20 = new javax.swing.JButton();
+        jButton21 = new javax.swing.JButton();
+        jButton22 = new javax.swing.JButton();
+        jButton23 = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        jTextField6 = new javax.swing.JTextField();
+        jButton24 = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
 
@@ -103,7 +145,7 @@ public class MainMenu extends javax.swing.JFrame {
         jButton4.setText("Exit");
         jPanel1.add(jButton4);
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 460));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 470));
 
         jPanel2.setBackground(new java.awt.Color(255, 204, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -129,8 +171,9 @@ public class MainMenu extends javax.swing.JFrame {
         jPanel5.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 140, -1));
 
         jLabel5.setText("Remaining Calories");
-        jPanel5.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 150, -1));
+        jPanel5.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, 150, -1));
 
+        jTextField1.setEditable(false);
         jTextField1.setText("jTextField1");
         jPanel5.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 120, 120, -1));
 
@@ -140,8 +183,9 @@ public class MainMenu extends javax.swing.JFrame {
         jTextField3.setText("jTextField3");
         jPanel5.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 200, 120, -1));
 
+        jTextField4.setEditable(false);
         jTextField4.setText("jTextField4");
-        jPanel5.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 260, 120, -1));
+        jPanel5.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, 120, -1));
 
         jButton5.setText("Back");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -149,23 +193,48 @@ public class MainMenu extends javax.swing.JFrame {
                 jButton5ActionPerformed(evt);
             }
         });
-        jPanel5.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 310, 80, -1));
+        jPanel5.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 340, 80, -1));
+
+        jButton25.setText("Update");
+        jButton25.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton25ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jButton25, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 340, -1, -1));
+
+        jLabel13.setText("Available Amount");
+        jPanel5.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, -1, -1));
+
+        jTextField7.setEditable(false);
+        jTextField7.setText("jTextField7");
+        jPanel5.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 280, 120, -1));
 
         jPanel2.add(jPanel5, "card2");
 
         jPanel6.setFocusCycleRoot(true);
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel7.setText("Cafeteria");
-        jPanel6.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 330, -1, 20));
+        jLabel7.setText("Vending Machine");
+        jPanel6.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 330, -1, 20));
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/finalproject/map-pointer-icon.png"))); // NOI18N
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
         jPanel6.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 160, 20, 30));
 
-        jLabel8.setText("Vending Machine");
-        jPanel6.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 190, -1, -1));
+        jLabel8.setText("Cafeteria");
+        jPanel6.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 190, -1, -1));
 
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/finalproject/map-pointer-icon.png"))); // NOI18N
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
         jPanel6.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 300, 20, 30));
 
         jButton13.setText("Back");
@@ -203,14 +272,29 @@ public class MainMenu extends javax.swing.JFrame {
 
         jButton9.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 36)); // NOI18N
         jButton9.setText("Add $10");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
         jPanel7.add(jButton9);
 
         jButton10.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 36)); // NOI18N
         jButton10.setText("Add $50");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
         jPanel7.add(jButton10);
 
         jButton11.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 36)); // NOI18N
         jButton11.setText("Add $100");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
         jPanel7.add(jButton11);
 
         jButton12.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 36)); // NOI18N
@@ -224,7 +308,108 @@ public class MainMenu extends javax.swing.JFrame {
 
         jPanel2.add(jPanel7, "card4");
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, 420, 460));
+        jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jTable1.setEditingColumn(0);
+        jTable1.setEditingRow(0);
+        jScrollPane1.setViewportView(jTable1);
+
+        jPanel8.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 410, 210));
+
+        jLabel9.setText("Total Cost");
+        jPanel8.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 80, 50));
+
+        jLabel10.setText("Total Calories");
+        jPanel8.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, -1, -1));
+
+        jButton14.setText("Buy Food");
+        jButton14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton14ActionPerformed(evt);
+            }
+        });
+        jPanel8.add(jButton14, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 400, -1, -1));
+
+        jButton15.setText("Go Back!");
+        jPanel8.add(jButton15, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 400, -1, -1));
+
+        jPanel2.add(jPanel8, "card6");
+
+        jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel10.setLayout(new java.awt.GridLayout(4, 2));
+
+        jButton16.setText("Pepsi - $1.50");
+        jButton16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton16ActionPerformed(evt);
+            }
+        });
+        jPanel10.add(jButton16);
+
+        jButton17.setText("Coke - $1.50");
+        jPanel10.add(jButton17);
+
+        jButton18.setText("Fanta - $1.50");
+        jPanel10.add(jButton18);
+
+        jButton19.setText("Choco Bar - $2");
+        jPanel10.add(jButton19);
+
+        jButton20.setText("Mix Nuts - $4");
+        jPanel10.add(jButton20);
+
+        jButton21.setText("Energy Bar - $3");
+        jPanel10.add(jButton21);
+
+        jButton22.setText("XS Drink - $4");
+        jButton22.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton22ActionPerformed(evt);
+            }
+        });
+        jPanel10.add(jButton22);
+
+        jButton23.setText("M&M - $2.50");
+        jPanel10.add(jButton23);
+
+        jPanel9.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 450));
+
+        jLabel11.setText("Remaining Amount");
+        jPanel9.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 130, -1, 20));
+
+        jTextField6.setText("jTextField6");
+        jTextField6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField6ActionPerformed(evt);
+            }
+        });
+        jPanel9.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 170, 90, 30));
+
+        jButton24.setText("Back");
+        jPanel9.add(jButton24, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 420, -1, -1));
+
+        jLabel12.setText("Welcome to Vending Machine");
+        jPanel9.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 20, 140, 60));
+
+        jPanel2.add(jPanel9, "card7");
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, 420, 470));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 204));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -253,10 +438,10 @@ public class MainMenu extends javax.swing.JFrame {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 225, Short.MAX_VALUE)
+            .addGap(0, 235, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 230, 230, 230));
+        getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 230, 230, 240));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -268,9 +453,40 @@ public class MainMenu extends javax.swing.JFrame {
         jPanel2.add(jPanel5);
         jPanel2.repaint();
         jPanel2.revalidate();
+        
+        Connection conn = db.getConnect();
+        String sql = "select * from Login where U_NAME = ?"; 
+        System.out.println(u_name);
+        //System.out.println(password.getText());
+        try{
+            try (PreparedStatement pst = conn.prepareStatement(sql)) {
+                pst.setString(1, u_name);
+                //pst.setString(2,password.getText());
+                rs=pst.executeQuery();
+
+                if(rs.next()){
+                    jTextField1.setText(rs.getString("U_NAME"));
+                    jTextField2.setText(rs.getString("DAILY_CALORIES"));
+                    jTextField3.setText(rs.getString("FOOD_REQ"));
+                    jTextField7.setText(rs.getString("AMOUNT"));
+                  
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Invalid Username and Password");
+                }
+
+                rs.close();
+            }
+            conn.close();
+
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
        // LayoutManager layout;
       //  layout = jPanel2.getLayout();
     //    card.show(jPanel2, "card3");
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -301,6 +517,30 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
+        int value = Integer.parseInt(jTextField5.getText());
+        value = value + 5;
+        System.out.println(value);
+        
+        try{
+        String amount = Integer.toString(value);
+        Connection conn = db.getConnect();
+        
+        String value4 = u_name;
+        String sql="UPDATE Login set AMOUNT='"+amount+"' Where U_NAME='"+u_name+"'";
+        PreparedStatement pst = conn.prepareStatement(sql);
+        pst.execute();
+        
+        String st = "Select AMOUNT from Login where U_NAME='"+u_name+"'";
+        PreparedStatement pst1 = conn.prepareStatement(st);
+        rs = pst1.executeQuery();
+        while(rs.next()){
+            jTextField5.setText(rs.getString("AMOUNT"));
+        }
+        
+    }
+    catch(Exception e){JOptionPane.showMessageDialog(null,e);}
+        
+        
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -309,6 +549,34 @@ public class MainMenu extends javax.swing.JFrame {
         jPanel2.add(jPanel7);
         jPanel2.repaint();
         jPanel2.revalidate();
+        
+        Connection conn = db.getConnect();
+        String sql = "select * from Login where U_NAME = ?"; 
+        System.out.println(u_name);
+        //System.out.println(password.getText());
+        try{
+            try (PreparedStatement pst = conn.prepareStatement(sql)) {
+                pst.setString(1, u_name);
+                //pst.setString(2,password.getText());
+                rs=pst.executeQuery();
+
+                if(rs.next()){
+                    jTextField5.setText(rs.getString("AMOUNT"));
+                  
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Invalid Username and Password");
+                }
+
+                rs.close();
+            }
+            conn.close();
+
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
@@ -337,18 +605,207 @@ public class MainMenu extends javax.swing.JFrame {
         jPanel2.revalidate();
     }//GEN-LAST:event_jButton13ActionPerformed
 
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here
+        
+        jPanel2.removeAll();
+        jPanel2.add(jPanel8);
+        jPanel2.repaint();
+        jPanel2.revalidate();
+        
+       String sql = "select * from CafeItems";
+        try{
+                st = conn.createStatement(); 
+                rs = st.executeQuery(sql);
+                md = rs.getMetaData();
+                int columns = md.getColumnCount();
+                for (int i = 1; i <= columns; i++) {
+                    columnNames.addElement( md.getColumnName(i) );
+                }
+                columnNames.addElement("Select");
+                while (rs.next()) {
+                    Vector row = new Vector(columns+1);
+                    for (int i = 1; i <= columns; i++) {
+                        row.addElement( rs.getObject(i) );
+                        //System.out.println(rs.getObject(i));
+                /*while (rs.next()) {
+                    num = rs.getString("Item_ID");
+                    name = rs.getString("Item_Name");
+                    calories = Integer.parseInt(rs.getString("Calories"));
+                    price = Integer.parseInt(rs.getString("Price"));
+                    System.out.println(num+""+name+""+calories+""+price);*/
+                    }
+                     row.addElement(new JCheckBox());
+                    
+                     data.addElement( row );
+                }    
+                rs.close();
+                st.close();
+                conn.close();
+        }catch(SQLException | NumberFormatException ex){
+            ex.printStackTrace();
+        }
+        
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(data,columnNames));
+              
+            /*new Object [][] {
+                
+                {num,name, calories,price}
+            },
+            new String [] {
+                "Item No", "Item Name", "Calories", "Cost"
+            }
+        )
+        
+        );*/
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton14ActionPerformed
+
+    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField6ActionPerformed
+
+    private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton16ActionPerformed
+
+    private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton22ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        jPanel2.removeAll();
+        jPanel2.add(jPanel9);
+        jPanel2.repaint();
+        jPanel2.revalidate();
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton25ActionPerformed
+        // TODO add your handling code here:
+        try{
+       
+        Connection conn = db.getConnect();
+        String value1 = jTextField2.getText();
+        String value2 = jTextField3.getText();
+        String value3 = jTextField7.getText();
+        String value4 = u_name;
+        String sql="UPDATE Login set DAILY_CALORIES='"+value1+"' ,FOOD_REQ='"+value2+"' ,AMOUNT='"+value3+"' Where U_NAME='"+u_name+"'";
+        PreparedStatement pst = conn.prepareStatement(sql);
+        pst.execute();
+    }
+    catch(Exception e){JOptionPane.showMessageDialog(null,e);}
+
+    }//GEN-LAST:event_jButton25ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+        int value = Integer.parseInt(jTextField5.getText());
+        value = value + 10;
+        System.out.println(value);
+        
+        try{
+        String amount = Integer.toString(value);
+        Connection conn = db.getConnect();
+        
+        String value4 = u_name;
+        String sql="UPDATE Login set AMOUNT='"+amount+"' Where U_NAME='"+u_name+"'";
+        PreparedStatement pst = conn.prepareStatement(sql);
+        pst.execute();
+        
+        String st = "Select AMOUNT from Login where U_NAME='"+u_name+"'";
+        PreparedStatement pst1 = conn.prepareStatement(st);
+        rs = pst1.executeQuery();
+        while(rs.next()){
+            jTextField5.setText(rs.getString("AMOUNT"));
+        }
+        
+    }
+    catch(Exception e){JOptionPane.showMessageDialog(null,e);}
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        // TODO add your handling code here:
+        int value = Integer.parseInt(jTextField5.getText());
+        value = value + 50;
+        System.out.println(value);
+        
+        try{
+        String amount = Integer.toString(value);
+        Connection conn = db.getConnect();
+        
+        String value4 = u_name;
+        String sql="UPDATE Login set AMOUNT='"+amount+"' Where U_NAME='"+u_name+"'";
+        PreparedStatement pst = conn.prepareStatement(sql);
+        pst.execute();
+        
+        String st = "Select AMOUNT from Login where U_NAME='"+u_name+"'";
+        PreparedStatement pst1 = conn.prepareStatement(st);
+        rs = pst1.executeQuery();
+        while(rs.next()){
+            jTextField5.setText(rs.getString("AMOUNT"));
+        }
+        
+    }
+    catch(Exception e){JOptionPane.showMessageDialog(null,e);}
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        // TODO add your handling code here:
+        int value = Integer.parseInt(jTextField5.getText());
+        value = value + 100;
+        System.out.println(value);
+        
+        try{
+        String amount = Integer.toString(value);
+        Connection conn = db.getConnect();
+        
+        String value4 = u_name;
+        String sql="UPDATE Login set AMOUNT='"+amount+"' Where U_NAME='"+u_name+"'";
+        PreparedStatement pst = conn.prepareStatement(sql);
+        pst.execute();
+        
+        String st = "Select AMOUNT from Login where U_NAME='"+u_name+"'";
+        PreparedStatement pst1 = conn.prepareStatement(st);
+        rs = pst1.executeQuery();
+        while(rs.next()){
+            jTextField5.setText(rs.getString("AMOUNT"));
+        }
+        
+    }
+    catch(Exception e){JOptionPane.showMessageDialog(null,e);}
+    }//GEN-LAST:event_jButton11ActionPerformed
+    
+    public void setName(String u_name)
+    {
+        this.u_name = u_name;
+    }
     /**
      * @param args the command line arguments
      */
     
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
+    private javax.swing.JButton jButton14;
+    private javax.swing.JButton jButton15;
+    private javax.swing.JButton jButton16;
+    private javax.swing.JButton jButton17;
+    private javax.swing.JButton jButton18;
+    private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton20;
+    private javax.swing.JButton jButton21;
+    private javax.swing.JButton jButton22;
+    private javax.swing.JButton jButton23;
+    private javax.swing.JButton jButton24;
+    private javax.swing.JButton jButton25;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -357,6 +814,10 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -364,18 +825,27 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField jTextField7;
     // End of variables declaration//GEN-END:variables
+
 }
