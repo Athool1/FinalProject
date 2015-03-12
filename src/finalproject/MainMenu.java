@@ -14,8 +14,6 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import org.jfree.chart.ChartFactory;
@@ -532,15 +530,18 @@ public class MainMenu extends javax.swing.JFrame {
         
         Connection conn = db.getConnect();
         String sql = "select * from Login where U_NAME = ?"; 
+        String sql1 = "Select SUM(TOTAL_CALORIES) from Orders where U_NAME = ?";      
         System.out.println(u_name);
         //System.out.println(password.getText());
         try{
-            try (PreparedStatement pst = conn.prepareStatement(sql)) {
+                
+                PreparedStatement pst = conn.prepareStatement(sql);
                 pst.setString(1, u_name);
                 //pst.setString(2,password.getText());
                 rs=pst.executeQuery();
 
                 if(rs.next()){
+                    
                     jTextField1.setText(rs.getString("U_NAME"));
                     jTextField2.setText(rs.getString("DAILY_CALORIES"));
                     jTextField3.setText(rs.getString("FOOD_REQ"));
@@ -550,12 +551,23 @@ public class MainMenu extends javax.swing.JFrame {
                 else{
                     JOptionPane.showMessageDialog(null, "Invalid Username and Password");
                 }
-
+                 
+                int daily_cal = Integer.parseInt(jTextField2.getText());
+                PreparedStatement pst1 = conn.prepareStatement(sql1);
+                pst1.setString(1, u_name);
+                rs1 = pst1.executeQuery();
+                if(rs1.next()){
+                    int cal = Integer.parseInt(rs1.getString("SUM(TOTAL_CALORIES)"));
+                    int diff_cal = daily_cal - cal;
+                    jTextField4.setText(Integer.toString(diff_cal));
+                }
+                
                 rs.close();
+                rs1.close();
+                pst1.close();
                 pst.close();
-            }
-            conn.close();
-
+                conn.close();
+                
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, e);
         }
@@ -839,9 +851,12 @@ public class MainMenu extends javax.swing.JFrame {
         String value2 = jTextField3.getText();
         String value3 = jTextField7.getText();
         String value4 = u_name;
+        
         String sql="UPDATE Login set DAILY_CALORIES='"+value1+"' ,FOOD_REQ='"+value2+"' ,AMOUNT='"+value3+"' Where U_NAME='"+u_name+"'";
         PreparedStatement pst = conn.prepareStatement(sql);
         pst.execute();
+        
+        
         
         pst.close();
         conn.close();
