@@ -5,6 +5,8 @@
  */
 package finalproject;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,8 +14,16 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 
 /**
@@ -25,12 +35,13 @@ public class MainMenu extends javax.swing.JFrame {
     connectWithDB db = new connectWithDB();
     Connection conn;
     Statement st;
-    ResultSet rs;
+    ResultSet rs,rs1;
     ResultSetMetaData md;
     String num, name;
     int calories,price;
     Vector columnNames = new Vector();
     Vector data = new Vector();
+    
     private String u_name;
     /**
      * Creates new form MainMenu
@@ -53,6 +64,8 @@ public class MainMenu extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton27 = new javax.swing.JButton();
+        jButton28 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jTextArea1 = new javax.swing.JTextArea();
@@ -105,6 +118,12 @@ public class MainMenu extends javax.swing.JFrame {
         jTextField6 = new javax.swing.JTextField();
         jButton24 = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
+        jButton26 = new javax.swing.JButton();
+        jLabel14 = new javax.swing.JLabel();
+        jTextField8 = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        jTextField9 = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
 
@@ -142,10 +161,31 @@ public class MainMenu extends javax.swing.JFrame {
         });
         jPanel1.add(jButton3);
 
+        jButton27.setText("Expense Graph");
+        jButton27.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton27ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton27);
+
+        jButton28.setText("Calorie Graph");
+        jButton28.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton28ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton28);
+
         jButton4.setText("Exit");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton4);
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 470));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 490));
 
         jPanel2.setBackground(new java.awt.Color(255, 204, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -353,7 +393,10 @@ public class MainMenu extends javax.swing.JFrame {
 
         jPanel10.setLayout(new java.awt.GridLayout(4, 2));
 
-        jButton16.setText("Pepsi - $1.50");
+        jButton16.setText("Pepsi");
+        jButton16.setActionCommand("Pepsi ");
+        jButton16.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        jButton16.setInheritsPopupMenu(true);
         jButton16.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton16ActionPerformed(evt);
@@ -361,22 +404,48 @@ public class MainMenu extends javax.swing.JFrame {
         });
         jPanel10.add(jButton16);
 
-        jButton17.setText("Coke - $1.50");
+        jButton17.setText("Coke");
+        jButton17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton17ActionPerformed(evt);
+            }
+        });
         jPanel10.add(jButton17);
 
-        jButton18.setText("Fanta - $1.50");
+        jButton18.setText("Fanta");
+        jButton18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton18ActionPerformed(evt);
+            }
+        });
         jPanel10.add(jButton18);
 
-        jButton19.setText("Choco Bar - $2");
+        jButton19.setText("Choco Bar");
+        jButton19.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButton19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton19ActionPerformed(evt);
+            }
+        });
         jPanel10.add(jButton19);
 
-        jButton20.setText("Mix Nuts - $4");
+        jButton20.setText("Mix Nuts");
+        jButton20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton20ActionPerformed(evt);
+            }
+        });
         jPanel10.add(jButton20);
 
-        jButton21.setText("Energy Bar - $3");
+        jButton21.setText("Energy Bar");
+        jButton21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton21ActionPerformed(evt);
+            }
+        });
         jPanel10.add(jButton21);
 
-        jButton22.setText("XS Drink - $4");
+        jButton22.setText("XS Drink");
         jButton22.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton22.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -385,10 +454,15 @@ public class MainMenu extends javax.swing.JFrame {
         });
         jPanel10.add(jButton22);
 
-        jButton23.setText("M&M - $2.50");
+        jButton23.setText("M&M");
+        jButton23.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton23ActionPerformed(evt);
+            }
+        });
         jPanel10.add(jButton23);
 
-        jPanel9.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 450));
+        jPanel9.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 460));
 
         jLabel11.setText("Remaining Amount");
         jPanel9.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 130, -1, 20));
@@ -402,46 +476,58 @@ public class MainMenu extends javax.swing.JFrame {
         jPanel9.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 170, 90, 30));
 
         jButton24.setText("Back");
+        jButton24.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton24ActionPerformed(evt);
+            }
+        });
         jPanel9.add(jButton24, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 420, -1, -1));
 
         jLabel12.setText("Welcome to Vending Machine");
         jPanel9.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 20, 140, 60));
 
+        jButton26.setText("Buy!");
+        jButton26.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton26ActionPerformed(evt);
+            }
+        });
+        jPanel9.add(jButton26, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 370, -1, -1));
+
+        jLabel14.setText("Item Cost");
+        jPanel9.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 230, -1, -1));
+
+        jTextField8.setText("jTextField8");
+        jPanel9.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 260, 50, 30));
+
+        jLabel15.setText("Calories");
+        jPanel9.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 230, -1, -1));
+
+        jTextField9.setText("jTextField9");
+        jPanel9.add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 260, 50, 30));
+
+        jLabel16.setText("$");
+        jPanel9.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 260, 10, 30));
+
         jPanel2.add(jPanel9, "card7");
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, 420, 470));
-
-        jPanel3.setBackground(new java.awt.Color(255, 255, 204));
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 226, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 225, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 0, 230, 230));
-
-        jPanel4.setBackground(new java.awt.Color(204, 255, 204));
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jPanel3.setLayout(new java.awt.BorderLayout());
+        jPanel2.add(jPanel3, "card8");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 226, Short.MAX_VALUE)
+            .addGap(0, 446, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 235, Short.MAX_VALUE)
+            .addGap(0, 485, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 230, 230, 240));
+        jPanel2.add(jPanel4, "card9");
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, 450, 490));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -476,6 +562,7 @@ public class MainMenu extends javax.swing.JFrame {
                 }
 
                 rs.close();
+                pst.close();
             }
             conn.close();
 
@@ -536,7 +623,9 @@ public class MainMenu extends javax.swing.JFrame {
         while(rs.next()){
             jTextField5.setText(rs.getString("AMOUNT"));
         }
-        
+        rs.close();
+        pst.close();
+        conn.close();
     }
     catch(Exception e){JOptionPane.showMessageDialog(null,e);}
         
@@ -569,6 +658,7 @@ public class MainMenu extends javax.swing.JFrame {
                 }
 
                 rs.close();
+                pst.close();
             }
             conn.close();
 
@@ -670,10 +760,76 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
         // TODO add your handling code here:
+        Connection conn = db.getConnect();
+        String sql = "select * from VM where ITEM_NAME = ?"; 
+        String item = jButton16.getText();
+        String st = "Select AMOUNT from Login where U_NAME='"+u_name+"'";
+        System.out.println(item);
+        //System.out.println(password.getText());
+        try{
+                PreparedStatement pst = conn.prepareStatement(sql);
+                pst.setString(1, item);
+                rs=pst.executeQuery();
+                if(rs.next()){
+                    jTextField8.setText(rs.getString("Cost"));
+                    jTextField9.setText(rs.getString("Item_cal"));
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Invalid Item");
+                } 
+
+ 
+                PreparedStatement pst1 = conn.prepareStatement(st);
+                rs1 = pst1.executeQuery();
+                while(rs1.next()){
+                    jTextField6.setText(rs1.getString("AMOUNT"));
+                }
+                rs.close();
+                rs1.close();
+                pst1.close();
+                pst.close();
+                conn.close();
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+            
+        
     }//GEN-LAST:event_jButton16ActionPerformed
 
     private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
         // TODO add your handling code here:
+        Connection conn = db.getConnect();
+        String sql = "select * from VM where ITEM_NAME = ?"; 
+        String item = jButton22.getText();
+        String st = "Select AMOUNT from Login where U_NAME='"+u_name+"'";
+        System.out.println(item);
+        //System.out.println(password.getText());
+        try{
+                PreparedStatement pst = conn.prepareStatement(sql);
+                pst.setString(1, item);
+                rs=pst.executeQuery();
+                if(rs.next()){
+                    jTextField8.setText(rs.getString("Cost"));
+                    jTextField9.setText(rs.getString("Item_cal"));
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Invalid Item");
+                } 
+
+ 
+                PreparedStatement pst1 = conn.prepareStatement(st);
+                rs1 = pst1.executeQuery();
+                while(rs1.next()){
+                    jTextField6.setText(rs1.getString("AMOUNT"));
+                }
+                rs.close();
+                rs1.close();
+                pst1.close();
+                pst.close();
+                conn.close();
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
     }//GEN-LAST:event_jButton22ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
@@ -696,6 +852,9 @@ public class MainMenu extends javax.swing.JFrame {
         String sql="UPDATE Login set DAILY_CALORIES='"+value1+"' ,FOOD_REQ='"+value2+"' ,AMOUNT='"+value3+"' Where U_NAME='"+u_name+"'";
         PreparedStatement pst = conn.prepareStatement(sql);
         pst.execute();
+        
+        pst.close();
+        conn.close();
     }
     catch(Exception e){JOptionPane.showMessageDialog(null,e);}
 
@@ -722,7 +881,10 @@ public class MainMenu extends javax.swing.JFrame {
         while(rs.next()){
             jTextField5.setText(rs.getString("AMOUNT"));
         }
-        
+        rs.close();
+        pst.close();
+        pst1.close();
+        conn.close();
     }
     catch(Exception e){JOptionPane.showMessageDialog(null,e);}
     }//GEN-LAST:event_jButton9ActionPerformed
@@ -748,7 +910,9 @@ public class MainMenu extends javax.swing.JFrame {
         while(rs.next()){
             jTextField5.setText(rs.getString("AMOUNT"));
         }
-        
+        rs.close();
+        pst.close();
+        conn.close();
     }
     catch(Exception e){JOptionPane.showMessageDialog(null,e);}
     }//GEN-LAST:event_jButton10ActionPerformed
@@ -774,11 +938,326 @@ public class MainMenu extends javax.swing.JFrame {
         while(rs.next()){
             jTextField5.setText(rs.getString("AMOUNT"));
         }
-        
+        rs.close();
+        pst.close();
+        conn.close();
     }
     catch(Exception e){JOptionPane.showMessageDialog(null,e);}
     }//GEN-LAST:event_jButton11ActionPerformed
-    
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
+        // TODO add your handling code here
+        int amount = Integer.parseInt(jTextField6.getText());
+        int cost = Integer.parseInt(jTextField8.getText());
+        
+        int balance = amount-cost;
+        
+        try{
+        
+            Connection conn = db.getConnect();
+
+            String sql="UPDATE Login set AMOUNT='"+balance+"' Where U_NAME='"+u_name+"'";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "Item Dispensed");
+
+            String st = "Select AMOUNT from Login where U_NAME='"+u_name+"'";
+            PreparedStatement pst1 = conn.prepareStatement(st);
+            rs = pst1.executeQuery();
+            while(rs.next()){
+                jTextField6.setText(rs.getString("AMOUNT"));
+            }
+            
+            String item_cost = jTextField8.getText();
+            String cal = jTextField9.getText();
+            String st1 = "Insert into Orders(total_cost,total_calories,u_name)values(?,?,?)";
+            PreparedStatement pst2 = conn.prepareStatement(st1);
+            pst2.setString(1, item_cost);
+            pst2.setString(2, cal);
+            pst2.setString(3, u_name);
+            
+            pst2.execute();
+            
+            rs.close();
+            pst.close();
+            conn.close();
+        }
+        catch(Exception e){JOptionPane.showMessageDialog(null,e);}
+    }//GEN-LAST:event_jButton26ActionPerformed
+
+    private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
+        // TODO add your handling code here:
+        Connection conn = db.getConnect();
+        String sql = "select * from VM where ITEM_NAME = ?"; 
+        String item = jButton18.getText();
+        String st = "Select AMOUNT from Login where U_NAME='"+u_name+"'";
+        System.out.println(item);
+        //System.out.println(password.getText());
+        try{
+                PreparedStatement pst = conn.prepareStatement(sql);
+                pst.setString(1, item);
+                rs=pst.executeQuery();
+                if(rs.next()){
+                    jTextField8.setText(rs.getString("Cost"));
+                    jTextField9.setText(rs.getString("Item_cal"));
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Invalid Item");
+                } 
+
+ 
+                PreparedStatement pst1 = conn.prepareStatement(st);
+                rs1 = pst1.executeQuery();
+                while(rs1.next()){
+                    jTextField6.setText(rs1.getString("AMOUNT"));
+                }
+                rs.close();
+                rs1.close();
+                pst1.close();
+                pst.close();
+                conn.close();
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_jButton18ActionPerformed
+
+    private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
+        // TODO add your handling code here:
+        Connection conn = db.getConnect();
+        String sql = "select * from VM where ITEM_NAME = ?"; 
+        String item = jButton17.getText();
+        String st = "Select AMOUNT from Login where U_NAME='"+u_name+"'";
+        System.out.println(item);
+        //System.out.println(password.getText());
+        try{
+                PreparedStatement pst = conn.prepareStatement(sql);
+                pst.setString(1, item);
+                rs=pst.executeQuery();
+                if(rs.next()){
+                    jTextField8.setText(rs.getString("Cost"));
+                    jTextField9.setText(rs.getString("Item_cal"));
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Invalid Item");
+                } 
+
+ 
+                PreparedStatement pst1 = conn.prepareStatement(st);
+                rs1 = pst1.executeQuery();
+                while(rs1.next()){
+                    jTextField6.setText(rs1.getString("AMOUNT"));
+                }
+                rs.close();
+                rs1.close();
+                pst1.close();
+                pst.close();
+                conn.close();
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_jButton17ActionPerformed
+
+    private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
+        // TODO add your handling code here:
+        Connection conn = db.getConnect();
+        String sql = "select * from VM where ITEM_NAME = ?"; 
+        String item = jButton19.getText();
+        String st = "Select AMOUNT from Login where U_NAME='"+u_name+"'";
+        System.out.println(item);
+        //System.out.println(password.getText());
+        try{
+                PreparedStatement pst = conn.prepareStatement(sql);
+                pst.setString(1, item);
+                rs=pst.executeQuery();
+                if(rs.next()){
+                    jTextField8.setText(rs.getString("Cost"));
+                    jTextField9.setText(rs.getString("Item_cal"));
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Invalid Item");
+                } 
+
+ 
+                PreparedStatement pst1 = conn.prepareStatement(st);
+                rs1 = pst1.executeQuery();
+                while(rs1.next()){
+                    jTextField6.setText(rs1.getString("AMOUNT"));
+                    jTextField9.setText(rs.getString("Item_cal"));
+                }
+                rs.close();
+                rs1.close();
+                pst1.close();
+                pst.close();
+                conn.close();
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_jButton19ActionPerformed
+
+    private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
+        // TODO add your handling code here:
+        Connection conn = db.getConnect();
+        String sql = "select * from VM where ITEM_NAME = ?"; 
+        String item = jButton20.getText();
+        String st = "Select AMOUNT from Login where U_NAME='"+u_name+"'";
+        System.out.println(item);
+        //System.out.println(password.getText());
+        try{
+                PreparedStatement pst = conn.prepareStatement(sql);
+                pst.setString(1, item);
+                rs=pst.executeQuery();
+                if(rs.next()){
+                    jTextField8.setText(rs.getString("Cost"));
+                    jTextField9.setText(rs.getString("Item_cal"));
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Invalid Item");
+                } 
+
+ 
+                PreparedStatement pst1 = conn.prepareStatement(st);
+                rs1 = pst1.executeQuery();
+                while(rs1.next()){
+                    jTextField6.setText(rs1.getString("AMOUNT"));
+                }
+                rs.close();
+                rs1.close();
+                pst1.close();
+                pst.close();
+                conn.close();
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_jButton20ActionPerformed
+
+    private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton21ActionPerformed
+        // TODO add your handling code here:
+        Connection conn = db.getConnect();
+        String sql = "select * from VM where ITEM_NAME = ?"; 
+        String item = jButton21.getText();
+        String st = "Select AMOUNT from Login where U_NAME='"+u_name+"'";
+        System.out.println(item);
+        //System.out.println(password.getText());
+        try{
+                PreparedStatement pst = conn.prepareStatement(sql);
+                pst.setString(1, item);
+                rs=pst.executeQuery();
+                if(rs.next()){
+                    jTextField8.setText(rs.getString("Cost"));
+                    jTextField9.setText(rs.getString("Item_cal"));
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Invalid Item");
+                } 
+
+ 
+                PreparedStatement pst1 = conn.prepareStatement(st);
+                rs1 = pst1.executeQuery();
+                while(rs1.next()){
+                    jTextField6.setText(rs1.getString("AMOUNT"));
+                }
+                rs.close();
+                rs1.close();
+                pst1.close();
+                pst.close();
+                conn.close();
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_jButton21ActionPerformed
+
+    private void jButton23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton23ActionPerformed
+        // TODO add your handling code here:
+        Connection conn = db.getConnect();
+        String sql = "select * from VM where ITEM_NAME = ?"; 
+        String item = jButton23.getText();
+        String st = "Select AMOUNT from Login where U_NAME='"+u_name+"'";
+        System.out.println(item);
+        //System.out.println(password.getText());
+        try{
+                PreparedStatement pst = conn.prepareStatement(sql);
+                pst.setString(1, item);
+                rs=pst.executeQuery();
+                if(rs.next()){
+                    jTextField8.setText(rs.getString("Cost"));
+                    jTextField9.setText(rs.getString("Item_cal"));
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Invalid Item");
+                } 
+
+ 
+                PreparedStatement pst1 = conn.prepareStatement(st);
+                rs1 = pst1.executeQuery();
+                while(rs1.next()){
+                    jTextField6.setText(rs1.getString("AMOUNT"));
+                }
+                rs.close();
+                rs1.close();
+                pst1.close();
+                pst.close();
+                conn.close();
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_jButton23ActionPerformed
+
+    private void jButton24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton24ActionPerformed
+        // TODO add your handling code here:
+        jPanel2.removeAll();
+        //jPanel5.add(jPanel2);
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jTextArea1.setText("Please Select \nOptions \nfrom Left");
+        jPanel2.add(jTextArea1, "card6");
+
+        jPanel2.repaint();
+        jPanel2.revalidate();
+    }//GEN-LAST:event_jButton24ActionPerformed
+
+    private void jButton28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton28ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton28ActionPerformed
+
+    private void jButton27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton27ActionPerformed
+        // TODO add your handling code here:
+        jPanel2.removeAll();
+        jPanel2.add(jPanel3);
+        jPanel2.repaint();
+        jPanel2.revalidate();
+        
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+         
+                try {
+                    Statement stmt = conn.createStatement();
+                    ResultSet query_set = stmt.executeQuery("Select ID_DATE, SUM(TOTAL_CALORIES) from Orders group by ID_DATE");
+                    while (query_set.next()) {
+                        String date = query_set.getString("ID_DATE");
+                        System.out.println(date);
+                        int calories = Integer.parseInt(query_set.getString("SUM(TOTAL_CALORIES)"));
+                        System.out.println(calories);
+                        dataset.setValue(calories, "Calories", date);
+                        
+                    }
+                    JFreeChart chart = ChartFactory.createBarChart("Calories Graph","Date","Calories", dataset,PlotOrientation.VERTICAL,false,true,false);
+                        CategoryPlot p = chart.getCategoryPlot();
+                        p.setRangeGridlinePaint(Color.black);
+                        ChartPanel panel = new ChartPanel(chart);
+                        query_set.close();
+                        stmt.close(); 
+                        conn.close();
+                        jPanel3.removeAll();
+                        jPanel3.add(panel,BorderLayout.CENTER);
+                        //jPanel3.repaint();
+                        jPanel3.validate();
+                }catch(Exception ex){}
+    }//GEN-LAST:event_jButton27ActionPerformed
+   
     public void setName(String u_name)
     {
         this.u_name = u_name;
@@ -806,6 +1285,9 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JButton jButton23;
     private javax.swing.JButton jButton24;
     private javax.swing.JButton jButton25;
+    private javax.swing.JButton jButton26;
+    private javax.swing.JButton jButton27;
+    private javax.swing.JButton jButton28;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -818,6 +1300,9 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -846,6 +1331,8 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
+    private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables
 
 }
