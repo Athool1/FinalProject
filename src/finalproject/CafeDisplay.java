@@ -109,13 +109,18 @@ public class CafeDisplay extends javax.swing.JFrame {
                 rs=pst.executeQuery();
 
                 if(rs.next()){
-
+                    menu.setName(username.getText());
                     JOptionPane.showMessageDialog(null, "Username and Password correct");
+                    this.setVisible(false);
+                     menu.setPreferredSize(new Dimension(this.getPreferredSize()));
+                    menu.setVisible(true);
+                    
                 }
                 else{
                     JOptionPane.showMessageDialog(null, "Invalid Username and Password");
+                    this.setVisible(true);
                 }
-
+                 
                 rs.close();
             }
             conn.close();
@@ -123,14 +128,12 @@ public class CafeDisplay extends javax.swing.JFrame {
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, e);
         }
+       
         
-        this.setVisible(false);
-        menu.setPreferredSize(new Dimension(this.getPreferredSize()));
-        menu.setVisible(true);
         
         
     }//GEN-LAST:event_submitActionPerformed
-
+    
     /**
      * @param args the command line arguments
      */
@@ -162,6 +165,8 @@ public class CafeDisplay extends javax.swing.JFrame {
             }
         });
     }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
