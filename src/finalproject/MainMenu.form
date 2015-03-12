@@ -80,7 +80,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="jButton27">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Expense Graph"/>
+            <Property name="text" type="java.lang.String" value="Calories Graph"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton27ActionPerformed"/>
@@ -88,7 +88,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="jButton28">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Calorie Graph"/>
+            <Property name="text" type="java.lang.String" value="Expense Graph"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton28ActionPerformed"/>
@@ -770,18 +770,7 @@
             </Constraint>
           </Constraints>
 
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="446" max="32767" attributes="0"/>
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="485" max="32767" attributes="0"/>
-              </Group>
-            </DimensionLayout>
-          </Layout>
+          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
         </Container>
       </SubComponents>
     </Container>

@@ -161,7 +161,7 @@ public class MainMenu extends javax.swing.JFrame {
         });
         jPanel1.add(jButton3);
 
-        jButton27.setText("Expense Graph");
+        jButton27.setText("Calories Graph");
         jButton27.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton27ActionPerformed(evt);
@@ -169,7 +169,7 @@ public class MainMenu extends javax.swing.JFrame {
         });
         jPanel1.add(jButton27);
 
-        jButton28.setText("Calorie Graph");
+        jButton28.setText("Expense Graph");
         jButton28.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton28ActionPerformed(evt);
@@ -514,17 +514,7 @@ public class MainMenu extends javax.swing.JFrame {
         jPanel3.setLayout(new java.awt.BorderLayout());
         jPanel2.add(jPanel3, "card8");
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 446, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 485, Short.MAX_VALUE)
-        );
-
+        jPanel4.setLayout(new java.awt.BorderLayout());
         jPanel2.add(jPanel4, "card9");
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, 450, 490));
@@ -1222,6 +1212,37 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void jButton28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton28ActionPerformed
         // TODO add your handling code here:
+        jPanel2.removeAll();
+        jPanel2.add(jPanel4);
+        jPanel2.repaint();
+        jPanel2.revalidate();
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+         
+                try {
+                    Statement stmt = conn.createStatement();
+                    ResultSet query_set = stmt.executeQuery("Select ID_DATE, SUM(TOTAL_COST) from Orders group by ID_DATE");
+                    while (query_set.next()) {
+                        String date = query_set.getString("ID_DATE");
+                        System.out.println(date);
+                        int cost = Integer.parseInt(query_set.getString("SUM(TOTAL_COST)"));
+                        System.out.println(cost);
+                        dataset.setValue(cost, "Cost", date);
+                        
+                    }
+                    JFreeChart chart = ChartFactory.createBarChart("Expense Graph","Date","Cost($)", dataset,PlotOrientation.VERTICAL,false,true,false);
+                        CategoryPlot p = chart.getCategoryPlot();
+                        p.setRangeGridlinePaint(Color.black);
+                        ChartPanel panel = new ChartPanel(chart);
+                        query_set.close();
+                        stmt.close(); 
+                        conn.close();
+                        jPanel4.removeAll();
+                        jPanel4.add(panel,BorderLayout.CENTER);
+                        //jPanel3.repaint();
+                        jPanel4.validate();
+                }catch(Exception ex){}
+        
+        
     }//GEN-LAST:event_jButton28ActionPerformed
 
     private void jButton27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton27ActionPerformed
