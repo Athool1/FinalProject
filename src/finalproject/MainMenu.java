@@ -7,6 +7,7 @@ package finalproject;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,8 +15,14 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -63,7 +70,6 @@ public class MainMenu extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton27 = new javax.swing.JButton();
-        jButton28 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jTextArea1 = new javax.swing.JTextArea();
@@ -96,12 +102,15 @@ public class MainMenu extends javax.swing.JFrame {
         jButton11 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jButton14 = new javax.swing.JButton();
         jButton15 = new javax.swing.JButton();
+        jTextField10 = new javax.swing.JTextField();
+        jTextField11 = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList();
+        jLabel17 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         jButton16 = new javax.swing.JButton();
@@ -122,6 +131,7 @@ public class MainMenu extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         jTextField9 = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
 
@@ -167,14 +177,6 @@ public class MainMenu extends javax.swing.JFrame {
         });
         jPanel1.add(jButton27);
 
-        jButton28.setText("Expense Graph");
-        jButton28.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton28ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton28);
-
         jButton4.setText("Exit");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -183,7 +185,7 @@ public class MainMenu extends javax.swing.JFrame {
         });
         jPanel1.add(jButton4);
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 490));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 150, 490));
 
         jPanel2.setBackground(new java.awt.Color(255, 204, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -285,7 +287,7 @@ public class MainMenu extends javax.swing.JFrame {
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/finalproject/staticmap (1).png"))); // NOI18N
         jLabel6.setText("jLabel6");
-        jPanel6.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(-50, -40, 470, 550));
+        jPanel6.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -40, 460, 550));
 
         jPanel2.add(jPanel6, "card3");
 
@@ -348,31 +350,11 @@ public class MainMenu extends javax.swing.JFrame {
 
         jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTable1.setEditingColumn(0);
-        jTable1.setEditingRow(0);
-        jScrollPane1.setViewportView(jTable1);
-
-        jPanel8.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 410, 210));
-
         jLabel9.setText("Total Cost");
-        jPanel8.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 80, 50));
+        jPanel8.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 190, 80, 50));
 
         jLabel10.setText("Total Calories");
-        jPanel8.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, -1, -1));
+        jPanel8.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 170, -1, -1));
 
         jButton14.setText("Buy Food");
         jButton14.addActionListener(new java.awt.event.ActionListener() {
@@ -380,10 +362,35 @@ public class MainMenu extends javax.swing.JFrame {
                 jButton14ActionPerformed(evt);
             }
         });
-        jPanel8.add(jButton14, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 400, -1, -1));
+        jPanel8.add(jButton14, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 340, -1, -1));
 
         jButton15.setText("Go Back!");
-        jPanel8.add(jButton15, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 400, -1, -1));
+        jButton15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton15ActionPerformed(evt);
+            }
+        });
+        jPanel8.add(jButton15, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 340, -1, -1));
+
+        jTextField10.setText("jTextField10");
+        jPanel8.add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, -1, 30));
+
+        jTextField11.setText("jTextField11");
+        jPanel8.add(jTextField11, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 200, -1, 30));
+
+        jList1.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane2.setViewportView(jList1);
+
+        jPanel8.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 130, 70));
+
+        jLabel17.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel17.setText("WELCOME TO CAFETERIA");
+        jPanel8.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 340, 80));
 
         jPanel2.add(jPanel8, "card6");
 
@@ -481,8 +488,9 @@ public class MainMenu extends javax.swing.JFrame {
         });
         jPanel9.add(jButton24, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 420, -1, -1));
 
+        jLabel12.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         jLabel12.setText("Welcome to Vending Machine");
-        jPanel9.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 20, 140, 60));
+        jPanel9.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 20, 180, 60));
 
         jButton26.setText("Buy!");
         jButton26.addActionListener(new java.awt.event.ActionListener() {
@@ -505,7 +513,10 @@ public class MainMenu extends javax.swing.JFrame {
         jPanel9.add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 260, 50, 30));
 
         jLabel16.setText("$");
-        jPanel9.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 260, 10, 30));
+        jPanel9.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 170, 10, 30));
+
+        jLabel18.setText("$");
+        jPanel9.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 260, 10, 30));
 
         jPanel2.add(jPanel9, "card7");
 
@@ -515,7 +526,7 @@ public class MainMenu extends javax.swing.JFrame {
         jPanel4.setLayout(new java.awt.BorderLayout());
         jPanel2.add(jPanel4, "card9");
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, 450, 490));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 0, 460, 490));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -705,55 +716,101 @@ public class MainMenu extends javax.swing.JFrame {
         jPanel2.repaint();
         jPanel2.revalidate();
         
-       String sql = "select * from CafeItems";
-        try{
-                st = conn.createStatement(); 
-                rs = st.executeQuery(sql);
-                md = rs.getMetaData();
-                int columns = md.getColumnCount();
-                for (int i = 1; i <= columns; i++) {
-                    columnNames.addElement( md.getColumnName(i) );
-                }
-                columnNames.addElement("Select");
-                while (rs.next()) {
-                    Vector row = new Vector(columns+1);
-                    for (int i = 1; i <= columns; i++) {
-                        row.addElement( rs.getObject(i) );
-                        //System.out.println(rs.getObject(i));
-                /*while (rs.next()) {
-                    num = rs.getString("Item_ID");
-                    name = rs.getString("Item_Name");
-                    calories = Integer.parseInt(rs.getString("Calories"));
-                    price = Integer.parseInt(rs.getString("Price"));
-                    System.out.println(num+""+name+""+calories+""+price);*/
-                    }
-                     row.addElement(new JCheckBox());
-                    
-                     data.addElement( row );
-                }    
-                rs.close();
-                st.close();
-                conn.close();
-        }catch(SQLException | NumberFormatException ex){
-            ex.printStackTrace();
-        }
-        
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(data,columnNames));
-              
-            /*new Object [][] {
+        Vector v = new Vector();
+        try {
+            // TODO add your handling code here:
+            Connection con = db.getConnect();
+            String sql = "Select * from CafeItems";
+            
+            st=con.createStatement();
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                v.addElement(rs.getString("ITEM_NAME"));
                 
-                {num,name, calories,price}
-            },
-            new String [] {
-                "Item No", "Item Name", "Calories", "Cost"
             }
-        )
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        jList1.setListData(v);
         
-        );*/
+        jList1.addListSelectionListener(new ListSelectionListener(){
+            
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                int price = 0;
+                int calories =0;
+                String item_name = jList1.getSelectedValue().toString();
+                System.out.println(item_name);
+                jList1.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+                
+                try {
+            
+                    Connection con = db.getConnect();
+                    String sql = "Select CALORIES, PRICE from CafeItems where ITEM_NAME = '"+item_name+"'";
+                    
+                    st=con.createStatement();
+                    rs = st.executeQuery(sql);
+                    while (rs.next()) {
+                       calories = Integer.parseInt(rs.getString("CALORIES"));
+                       price = Integer.parseInt(rs.getString("PRICE"));
+                    }
+                    jTextField10.setText(Integer.toString(calories));
+                    jTextField11.setText(Integer.toString(price));
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+                }  
+            }
+        });
+          
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
         // TODO add your handling code here:
+        int amount = Integer.parseInt(jTextField11.getText());
+        int cal = Integer.parseInt(jTextField10.getText());
+        int total_amount = 0;
+        int total_cal = 0;
+        
+        try{
+        
+            Connection conn = db.getConnect();
+
+
+            String st = "Select DAILY_CALORIES, AMOUNT from Login where U_NAME='"+u_name+"'";
+            PreparedStatement pst1 = conn.prepareStatement(st);
+            rs=pst1.executeQuery();
+            if(rs.next()){
+                     total_amount = Integer.parseInt(rs.getString("AMOUNT"));
+                     total_cal = Integer.parseInt(rs.getString("DAILY_CALORIES"));
+            }
+            total_amount = total_amount - amount;
+            total_cal = total_cal - cal;
+            System.out.println(total_amount);
+            System.out.println(cal);
+            
+            
+            String st1 = "Update Login set AMOUNT ='"+total_amount+"',DAILY_CALORIES='"+total_cal+"' where U_NAME='"+u_name+"'";
+            PreparedStatement pst2 = conn.prepareStatement(st1);
+            pst2.execute();
+            
+            String st2 = "Insert into Orders(total_cost,total_calories,u_name)values('"+total_amount+"','"+total_cal+"','"+u_name+"')";
+            PreparedStatement pst3 = conn.prepareStatement(st1);
+            pst3.execute();
+            
+            rs.close();
+            
+            pst1.close();
+            pst2.close();
+            pst3.close();
+            conn.close();
+            
+            JOptionPane.showMessageDialog(null, "Your Order will be ready in 30 mins. Thank you.");
+        }
+        catch(SQLException | NumberFormatException e){JOptionPane.showMessageDialog(null,e);}
+        
+        
     }//GEN-LAST:event_jButton14ActionPerformed
 
     private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
@@ -1225,41 +1282,6 @@ public class MainMenu extends javax.swing.JFrame {
         jPanel2.revalidate();
     }//GEN-LAST:event_jButton24ActionPerformed
 
-    private void jButton28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton28ActionPerformed
-        // TODO add your handling code here:
-        jPanel2.removeAll();
-        jPanel2.add(jPanel4);
-        jPanel2.repaint();
-        jPanel2.revalidate();
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-         
-                try {
-                    Statement stmt = conn.createStatement();
-                    ResultSet query_set = stmt.executeQuery("Select ID_DATE, SUM(TOTAL_COST) from Orders group by ID_DATE");
-                    while (query_set.next()) {
-                        String date = query_set.getString("ID_DATE");
-                        System.out.println(date);
-                        int cost = Integer.parseInt(query_set.getString("SUM(TOTAL_COST)"));
-                        System.out.println(cost);
-                        dataset.setValue(cost, "Cost", date);
-                        
-                    }
-                    JFreeChart chart = ChartFactory.createBarChart("Expense Graph","Date","Cost($)", dataset,PlotOrientation.VERTICAL,false,true,false);
-                        CategoryPlot p = chart.getCategoryPlot();
-                        p.setRangeGridlinePaint(Color.black);
-                        ChartPanel panel = new ChartPanel(chart);
-                        query_set.close();
-                        stmt.close(); 
-                        conn.close();
-                        jPanel4.removeAll();
-                        jPanel4.add(panel,BorderLayout.CENTER);
-                        //jPanel3.repaint();
-                        jPanel4.validate();
-                }catch(Exception ex){}
-        
-        
-    }//GEN-LAST:event_jButton28ActionPerformed
-
     private void jButton27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton27ActionPerformed
         // TODO add your handling code here:
         jPanel2.removeAll();
@@ -1271,7 +1293,7 @@ public class MainMenu extends javax.swing.JFrame {
          
                 try {
                     Statement stmt = conn.createStatement();
-                    ResultSet query_set = stmt.executeQuery("Select ID_DATE, SUM(TOTAL_CALORIES) from Orders group by ID_DATE");
+                    ResultSet query_set = stmt.executeQuery("Select ID_DATE, SUM(TOTAL_CALORIES) from Orders where U_NAME='"+u_name+"' group by ID_DATE");
                     while (query_set.next()) {
                         String date = query_set.getString("ID_DATE");
                         System.out.println(date);
@@ -1287,12 +1309,26 @@ public class MainMenu extends javax.swing.JFrame {
                         query_set.close();
                         stmt.close(); 
                         conn.close();
-                        jPanel3.removeAll();
+                        
+                       // jPanel3.removeAll();
                         jPanel3.add(panel,BorderLayout.CENTER);
-                        //jPanel3.repaint();
+                        jPanel3.repaint();
                         jPanel3.validate();
                 }catch(Exception ex){}
     }//GEN-LAST:event_jButton27ActionPerformed
+
+    private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
+        // TODO add your handling code here:
+        jPanel2.removeAll();
+        //jPanel5.add(jPanel2);
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jTextArea1.setText("Please Select \nOptions \nfrom Left");
+        jPanel2.add(jTextArea1, "card6");
+
+        jPanel2.repaint();
+        jPanel2.revalidate();
+    }//GEN-LAST:event_jButton15ActionPerformed
    
     public void setName(String u_name)
     {
@@ -1323,7 +1359,6 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JButton jButton25;
     private javax.swing.JButton jButton26;
     private javax.swing.JButton jButton27;
-    private javax.swing.JButton jButton28;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -1339,6 +1374,8 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1347,6 +1384,7 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JList jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
@@ -1357,10 +1395,11 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField10;
+    private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;

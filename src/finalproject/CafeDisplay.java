@@ -112,7 +112,7 @@ public class CafeDisplay extends javax.swing.JFrame {
                     menu.setName(username.getText());
                     JOptionPane.showMessageDialog(null, "Username and Password correct");
                     this.setVisible(false);
-                     menu.setPreferredSize(new Dimension(this.getPreferredSize()));
+                    menu.setPreferredSize(new Dimension(this.getPreferredSize()));
                     menu.setVisible(true);
                     
                 }
