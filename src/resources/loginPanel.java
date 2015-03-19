@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package finalproject;
+package resources;
 
+import databasedriver.connectWithDB;
 import java.awt.CardLayout;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -74,7 +75,6 @@ public class loginPanel extends javax.swing.JPanel {
         });
         add(submit, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 400, 120, 40));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\Ashay\\Desktop\\CampusCafe.jpg")); // NOI18N
         jLabel4.setText("jLabel4");
         add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, 400, -1));
 

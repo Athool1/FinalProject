@@ -5,6 +5,7 @@
  */
 package finalproject;
 
+import databasedriver.connectWithDB;
 import java.awt.Dimension;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -79,11 +80,11 @@ public class CafeDisplay extends javax.swing.JFrame {
         });
         jPanel2.add(submit, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 400, 120, 40));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\Ashay\\Desktop\\CampusCafe.jpg")); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/CampusCafe.jpg"))); // NOI18N
         jLabel4.setText("jLabel4");
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, 400, -1));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/finalproject/L83710.jpg"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/L83710.jpg"))); // NOI18N
         jLabel3.setText("jLabel3");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 760, 550));
 
