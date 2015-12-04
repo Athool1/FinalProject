@@ -1,5 +1,4 @@
-# FinalProject
-CampusSmartCafe Application
+# CampusSmartCafe Application
 Tools used UML, Java, Swing, NetBeans, JDBC, Oracle SQL and Javadoc.
 
 Select any red or blue point on the map to see the items offered at that location. 
